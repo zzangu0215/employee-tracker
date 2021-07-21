@@ -6,8 +6,9 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 
 const initialPrompt = require('./prompts/initial_prompt');
-
 const initialPromptArray = initialPrompt();
+
+const addEmployee = require('./actions/addEmployee');
 
 
 const connection = mysql.createConnection({
@@ -27,7 +28,7 @@ connection.connect(err => {
 function appStarts() {
   const banner_wall = chalk.bold.blueBright('\n=====================================================================================\n');
   const banner_msg = chalk.bold.yellow(figlet.textSync('Employee Tracker'));
-  const app_author = chalk.bold.white(`\n\n                          Copyright @ 2021 by Jun Park\n`);
+  const app_author = chalk.bold.white(`\n\n                                                    Copyright @ 2021 by Jun Park\n`);
 
   console.log(banner_wall + banner_msg + app_author + banner_wall);
   // console.log(banner_msg);
@@ -46,7 +47,7 @@ function appStarts() {
           viewAllDepartmentS();
           break;
         case 'Add Employee':
-          addEmployee();
+          addEmployee(connection, appStarts);
           break;
         case 'Add Role':
           addRole();

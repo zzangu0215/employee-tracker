@@ -1,13 +1,15 @@
+// import npm packages
 require('dotenv').config();
-
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const figlet = require('figlet');
 
+// import all the user prompts
 const initialPrompt = require('./prompts/initial_prompt');
 const initialPromptArray = initialPrompt();
 
+// import all the actions based on the user's choice from the main menu
 const addEmployee = require('./actions/addEmployee');
 
 

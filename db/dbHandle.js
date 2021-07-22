@@ -51,6 +51,13 @@ class DBHandler {
     VALUES (?, ?, ?)`;
     return this.connection.query(query, role);
   }
+
+  add_department(department) {
+    const query = 
+    `INSERT INTO department (name)
+    VALUES (?)`;
+    return this.connection.query(query, department);
+  }
 }
 
 module.exports = DBHandler;

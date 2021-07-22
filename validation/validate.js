@@ -10,6 +10,9 @@ const validate = {
   validateRole(str) {
     return str !== '' || 'Please Enter the Role!';
   },
+  validateDepartment(str) {
+    return str !== '' || 'Please Enter the Department!';
+  },
   validateSalary(num) {
     if (validator.isDecimal(num)) return true;
     return 'Please Enter a Valid Salary!';

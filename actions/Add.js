@@ -11,15 +11,15 @@ class Add {
 
   addEmployee() {
 		// const answer = await inquirer.prompt(addOptionsArray);
-		const insert_query = 
-		`INSERT INTO employee (first_name, last_name, role_id, manager_id)
- 		 VALUES (?, ?, ?, ?)`;
+		// const insert_query = 
+		// `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+ 		//  VALUES (?, ?, ?, ?)`;
 
-		const role_query = 
-		`SELECT id, title FROM role`;
+		// const role_query = 
+		// `SELECT id, title FROM role`;
 
-		const manager_query = 
-		`SELECT * FROM employee`;
+		// const manager_query = 
+		// `SELECT * FROM employee`;
 
 		return inquirer.prompt([
 			{
@@ -50,8 +50,11 @@ class Add {
 		.then(answer => {
 			const employee_name = [answer.employee_first, answer.employee_last];
 			this.connection.query(
-				insert_query,
-
+				`SELECT id, title FROM role`,
+				(err, res) => {
+					if (err) throw err;
+					const roles = res.map(({title, id}) => ({}))
+				}
 			)
 		})
 	}

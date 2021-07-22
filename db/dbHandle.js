@@ -96,6 +96,24 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  view_employees_by_role() {
+    const query = 
+    `SELECT employee.id, employee.first_name, employee.last_name, role.title AS position 
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.id`;
+    return this.connection.query(query);
+  }
+
+  view_employees_by_department() {
+    const query = 
+    `SELECT employee.id, employee.first_name, employee.last_name, manager.id AS manager_id, 
+    CONCAT(manager.first_name, " ", manager.last_name) AS manager
+    FROM employee employee
+    LEFT JOIN employee manager 
+    ON employee.manager_id = manager.id `;
+    return this.connection.query(query);
+  }
+
   view_all_roles() {
     const query = 
     `SELECT role.id, role.title AS position, department.name AS department, role.salary AS salary, 

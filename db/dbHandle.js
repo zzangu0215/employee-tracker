@@ -67,6 +67,14 @@ class DBHandler {
     ORDER BY employee.id ASC`;
     return this.connection.query(query);
   }
+
+  view_all_roles() {
+    const query = 
+    `SELECT role.id, role.title, department.name AS department
+    FROM role
+    INNER JOIN department ON role.department_id = department.id`;
+    return this.connection.query(query);
+  }
 }
 
 module.exports = DBHandler;

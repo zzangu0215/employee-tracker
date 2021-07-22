@@ -75,6 +75,13 @@ class DBHandler {
     INNER JOIN department ON role.department_id = department.id`;
     return this.connection.query(query);
   }
+
+  view_all_departments() {
+    const query = 
+    `SELECT department.id AS id, department.name AS department
+    FROM department`;
+    return this.connection.query(query);
+  }
 }
 
 module.exports = DBHandler;

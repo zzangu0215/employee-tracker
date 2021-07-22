@@ -18,7 +18,8 @@ const validate = {
     return 'Please Enter a Valid Salary!';
   },
   isSame(str1, str2) {
-    if (str1 === str2) return true;
+    if (str1 === str2) 
+    return true;
   }
 };
 

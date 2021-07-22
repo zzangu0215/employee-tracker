@@ -46,6 +46,13 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  get_employee_manager() {
+    const query = 
+    `SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id
+    FROM employee`;
+    return this.connection.query(query);
+  }
+
   add_employee(employee) {
     const query = 
     `INSERT INTO employee (first_name, last_name, role_id, manager_id)
@@ -76,6 +83,15 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  view_employees_by_manager() {
+    const query = 
+    `SELECT employee.first_name, employee.last_name, manager.id AS manager_id, CONCAT(manager.first_name, " ", manager.last_name) AS manager
+    FROM employee employee
+    INNER JOIN employee manager 
+    ON employee.manager_id = manager.id `;
+    return this.connection.query(query);
+  }
+
   view_all_roles() {
     const query = 
     `SELECT role.id, role.title, department.name AS department
@@ -97,6 +113,14 @@ class DBHandler {
     SET employee.role_id = ?
     WHERE employee.id = ?`;
     return this.connection.query(query, [new_role_id, employee_id]);
+  }
+
+  update_employee_manager(manager_id, employee_id) {
+    const query = 
+    `UPDATE employee 
+    SET employee.manager_id = ? 
+    WHERE employee.id = ?`;
+    return this.connection.query(query, [manager_id, employee_id]);
   }
 }
 

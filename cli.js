@@ -8,11 +8,13 @@ class CLI {
     this.db = db;
   }
 
-  exit() {
-    return this.db.close_connection(() => process.exit(0));
+  start() {
+    return this.db
+      .init()
+      .then(() => this.main_menu());
   }
 
-  start() {
+  main_menu() {
     const banner_wall = chalk.bold.blueBright(
       "\n=====================================================================================\n"
     );
@@ -52,6 +54,50 @@ class CLI {
       }
     });
   }
+
+  view() {
+
+  }
+
+  add() {
+    inquirer.prompt([
+      {
+        type: 'list',
+        message: 'Please select one of the options below',
+        name: 'add_options',
+        choices: [
+          'Add Employee',
+          'Add Role',
+          'Add Department',
+          'Back to Main Menu'
+        ]
+      }
+    ]).then((answer) => {
+      switch (answer.add_options) {
+        case 'Add Employee':
+          return addEmployee();
+        case 'Add Role':
+          return addRole();
+        case 'Add Department':
+          return addDepartment();
+        default:
+          return this.main_menu();
+      }
+    })
+  }
+
+  update() {
+
+  }
+
+  remove() {
+
+  }
+
+  exit() {
+    return this.db.close_connection(() => process.exit(0));
+  }
+
 }
 
 module.exports = CLI;

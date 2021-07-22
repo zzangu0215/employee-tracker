@@ -1,5 +1,5 @@
 const util = require('util');
-const defaultConnection = require('./db/connection');
+const defaultConnection = require('./connection');
 
 class DBHandler {
 
@@ -33,11 +33,23 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  get_departments_list() {
+    const query = `SELECT * FROM department`;
+    return this.connection.query(query);
+  }
+
   add_employee(employee) {
     const query = 
     `INSERT INTO employee (first_name, last_name, role_id, manager_id)
     VALUES (?, ?, ?, ?)`;
     return this.connection.query(query, employee);
+  }
+
+  add_role(role) {
+    const query = 
+    `INSERT INTO role (title, salary, department_id)
+    VALUES (?, ?, ?)`;
+    return this.connection.query(query, role);
   }
 }
 

@@ -106,11 +106,11 @@ class DBHandler {
 
   view_employees_by_department() {
     const query = 
-    `SELECT employee.id, employee.first_name, employee.last_name, manager.id AS manager_id, 
-    CONCAT(manager.first_name, " ", manager.last_name) AS manager
-    FROM employee employee
-    LEFT JOIN employee manager 
-    ON employee.manager_id = manager.id `;
+    `SELECT employee.id, employee.first_name, employee.last_name, department.name AS department
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.id
+    LEFT JOIN department ON role.department_id = department.id 
+    `;
     return this.connection.query(query);
   }
 

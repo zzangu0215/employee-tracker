@@ -38,6 +38,14 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  get_employee_roles() {
+    const query = 
+    `SELECT employee.id, employee.first_name, employee.last_name, role.id AS "role_id"
+    FROM employee, role, department
+    WHERE employee.role_id = role.id AND role.department_id = department.id`;
+    return this.connection.query(query);
+  }
+
   add_employee(employee) {
     const query = 
     `INSERT INTO employee (first_name, last_name, role_id, manager_id)
@@ -81,6 +89,14 @@ class DBHandler {
     `SELECT department.id AS id, department.name AS department
     FROM department`;
     return this.connection.query(query);
+  }
+
+  update_employee_roles(new_role_id, employee_id) {
+    const query = 
+    `UPDATE employee
+    SET employee.role_id = ?
+    WHERE employee.id = ?`;
+    return this.connection.query(query, [new_role_id, employee_id]);
   }
 }
 

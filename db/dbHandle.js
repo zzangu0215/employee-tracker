@@ -1,5 +1,5 @@
 const util = require('util');
-const defaultConnection = require('./connection');
+const defaultConnection = require('../config/connection');
 
 class DBHandler {
 

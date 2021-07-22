@@ -6,24 +6,16 @@ function initialPrompt() {
       message: 'What would you like to do?',
       name: 'app_begins',
       choices: [
-        'View All Employees',
-        'View All Roles',
-        'View All Departments',
-        'Add Employee',
-        'Add Role',
-        'Add Department',
-        'Update Employee Role',
-        'Update Employee Manager',
-        'Remove Employee',
-        'Remove Role',
-        'Remove Department',
+        'View',
+        'Add',
+        'Update',
+        'Remove',
         'Exit'
       ]
     }
   ]
 
   return allChoices;
-
 }
 
 module.exports = initialPrompt;

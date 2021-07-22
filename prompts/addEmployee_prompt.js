@@ -25,30 +25,30 @@ function addEmployeePrompt() {
         }
       }
     },
-    {
-      type: 'input',
-      message: "What is the employee's role id?",
-      name: 'employee_role',
-      validate: answer => {
-        if (answer) return true;
-        else {
-          console.log("\nPlease Enter the role!");
-          return false;
-        }
-      }
-    },
-    {
-      type: 'input',
-      message: "Who is the employee's manager?",
-      name: 'employee_manager',
-      validate: answer => {
-        if (answer) return true;
-        else {
-          console.log("\nPlease Enter the manager!");
-          return false;
-        }
-      }
-    }
+    // {
+    //   type: 'input',
+    //   message: "What is the employee's role id?",
+    //   name: 'employee_role',
+    //   validate: answer => {
+    //     if (answer) return true;
+    //     else {
+    //       console.log("\nPlease Enter the role!");
+    //       return false;
+    //     }
+    //   }
+    // },
+    // {
+    //   type: 'input',
+    //   message: "Who is the employee's manager?",
+    //   name: 'employee_manager',
+    //   validate: answer => {
+    //     if (answer) return true;
+    //     else {
+    //       console.log("\nPlease Enter the manager!");
+    //       return false;
+    //     }
+    //   }
+    // }
   ]
 
   return addEmployeeQuestions;

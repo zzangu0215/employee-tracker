@@ -9,8 +9,9 @@ const figlet = require('figlet');
 const initialPrompt = require('./prompts/initial_prompt');
 const initialPromptArray = initialPrompt();
 
+const Add = require('./actions/Add');
 // import all the actions based on the user's choice from the main menu
-const addEmployee = require('./actions/addEmployee');
+// const addEmployee = require('./actions/addEmployee');
 
 
 const connection = mysql.createConnection({
@@ -39,41 +40,57 @@ function appStarts() {
     .prompt(initialPromptArray)
     .then(answer => {
       switch(answer.app_begins) {
-        case 'View All Employees':
-          viewAllEmployees();
+        case 'View':
+          viewActions(connection, appStarts);
           break;
-        case 'View All Roles':
-          viewAllRoles();
+        case 'Add':
+          addActions(connection, appStarts);
           break;
-        case 'View All Departments':
-          viewAllDepartmentS();
+        case 'Update':
+          updateActions(connection, appStarts);
           break;
-        case 'Add Employee':
-          addEmployee(connection, appStarts);
-          break;
-        case 'Add Role':
-          addRole();
-          break;
-        case 'Add Department':
-          addDepartment();
-          break;
-        case 'Update Employee Role':
-          updateEmployeeRole();
-          break;
-        case 'Update Employee Manager':
-          updateEmployeeManager();
-          break;
-        case 'Remove Employee':
-          removeEmployee();
-          break;
-        case 'Remove Role':
-          removeRole();
-          break;
-        case 'Remove Department':
-          removeDepartment();
+        case 'Remove':
+          removeActions(connection, appStarts);
           break;
         default:
-          connection.end();
+          connection.end(connection, appStarts);
       }
+      // switch(answer.app_begins) {
+      //   case 'View All Employees':
+      //     viewAllEmployees();
+      //     break;
+      //   case 'View All Roles':
+      //     viewAllRoles();
+      //     break;
+      //   case 'View All Departments':
+      //     viewAllDepartmentS();
+      //     break;
+      //   case 'Add Employee':
+      //     addEmployee(connection, appStarts);
+      //     break;
+      //   case 'Add Role':
+      //     addRole();
+      //     break;
+      //   case 'Add Department':
+      //     addDepartment();
+      //     break;
+      //   case 'Update Employee Role':
+      //     updateEmployeeRole();
+      //     break;
+      //   case 'Update Employee Manager':
+      //     updateEmployeeManager();
+      //     break;
+      //   case 'Remove Employee':
+      //     removeEmployee();
+      //     break;
+      //   case 'Remove Role':
+      //     removeRole();
+      //     break;
+      //   case 'Remove Department':
+      //     removeDepartment();
+      //     break;
+      //   default:
+      //     connection.end();
+      // }
     })
 }

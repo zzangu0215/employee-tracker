@@ -22,6 +22,23 @@ class DBHandler {
   close_connection(callback) {
     return this.connection.end(callback);
   }
+
+  get_roles_list() {
+    const query = `SELECT id, title FROM role`;
+    return this.connection.query(query);
+  }
+
+  get_managers_list() {
+    const query = `SELECT * FROM employee`;
+    return this.connection.query(query);
+  }
+
+  add_employee(employee) {
+    const query = 
+    `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES (?, ?, ?, ?)`;
+    return this.connection.query(query, employee);
+  }
 }
 
 module.exports = DBHandler;

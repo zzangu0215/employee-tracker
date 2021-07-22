@@ -75,7 +75,7 @@ class CLI {
     ]).then((answer) => {
       switch (answer.add_options) {
         case 'Add Employee':
-          return addEmployee();
+          return this.addEmployee();
         case 'Add Role':
           return addRole();
         case 'Add Department':
@@ -84,6 +84,83 @@ class CLI {
           return this.main_menu();
       }
     })
+  }
+
+  addEmployee() {
+    inquirer.prompt([
+      {
+        type: 'input',
+        message: "What is the employee's first name?",
+        name: 'employee_first',
+        validate: answer => {
+          if (answer) return true;
+          else {
+            console.log("\nPlease Enter the First name!");
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        message: "What is the employee's last name?",
+        name: 'employee_last',
+        validate: answer => {
+          if (answer) return true;
+          else {
+            console.log("\nPlease Enter the Last name!");
+            return false;
+          }
+        }
+      }
+    ])
+    .then(answer => {
+      const employee = [answer.employee_first, answer.employee_last];
+      this.db.get_roles_list()
+        .then(results => {
+          const roles = results.map(({title, id}) => ({name: title, value: id}));
+
+          inquirer.prompt([
+            {
+              type: 'list',
+              message: "What is the employee's role?",
+              name: 'employee_role',
+              choices: roles
+            }
+          ])
+          .then(answer => {
+            employee.push(answer.employee_role);
+            this.db.get_managers_list() 
+              .then(results => {
+                const managers = results.map(({first_name, last_name, id}) => ({name: `${first_name} ${last_name}`, value: id}));
+
+                inquirer.prompt([
+                  {
+                    type: 'list',
+                    message: "Who is the employee's manager?",
+                    name: 'employee_manager',
+                    choices: managers
+                  }
+                ])
+                .then(answer => {
+                  employee.push(answer.employee_manager);
+                  this.db.add_employee(employee)
+                    .then(() => {
+                      console.log("Employee added successfully ✔");
+                      return this.main_menu();
+                    })
+                })
+              })
+          })
+      })
+    })
+  }
+
+  addRole() {
+
+  }
+
+  addDepartment() {
+
   }
 
   update() {

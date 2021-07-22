@@ -73,11 +73,6 @@ class DBHandler {
     VALUES (?)`;
     return this.connection.query(query, department);
   }
-  // SELECT employee.id, employee.first_name, employee.last_name, role.title, 
-  // department.name AS "department", role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager
-  // FROM employee, role, department
-  // WHERE employee.role_id = role.id AND role.department_id = department.id
-  // ORDER BY employee.id ASC
 
   view_all_employees() {
     const query = 
@@ -93,7 +88,8 @@ class DBHandler {
 
   view_employees_by_manager() {
     const query = 
-    `SELECT employee.first_name, employee.last_name, manager.id AS manager_id, CONCAT(manager.first_name, " ", manager.last_name) AS manager
+    `SELECT employee.id, employee.first_name, employee.last_name, manager.id AS manager_id, 
+    CONCAT(manager.first_name, " ", manager.last_name) AS manager
     FROM employee employee
     LEFT JOIN employee manager 
     ON employee.manager_id = manager.id `;
@@ -102,16 +98,23 @@ class DBHandler {
 
   view_all_roles() {
     const query = 
-    `SELECT role.id, role.title, department.name AS department
+    `SELECT role.id, role.title AS position, department.name AS department, role.salary AS salary, 
+    COUNT (employee.role_id) AS "Total # of Employees"
     FROM role
-    INNER JOIN department ON role.department_id = department.id`;
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee ON employee.role_id = role.id
+    GROUP BY role.id
+    ORDER BY role.id ASC`;
     return this.connection.query(query);
   }
 
   view_all_departments() {
     const query = 
-    `SELECT department.id AS id, department.name AS department
-    FROM department`;
+    `SELECT department.id AS id, department.name AS department, COUNT (role.department_id) AS "Total # of Roles"
+    FROM department
+    LEFT JOIN role ON role.department_id = department.id
+    GROUP BY department.id
+    ORDER BY department.id ASC`;
     return this.connection.query(query);
   }
 

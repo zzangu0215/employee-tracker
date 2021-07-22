@@ -73,12 +73,20 @@ class DBHandler {
     VALUES (?)`;
     return this.connection.query(query, department);
   }
+  // SELECT employee.id, employee.first_name, employee.last_name, role.title, 
+  // department.name AS "department", role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager
+  // FROM employee, role, department
+  // WHERE employee.role_id = role.id AND role.department_id = department.id
+  // ORDER BY employee.id ASC
 
   view_all_employees() {
     const query = 
-    `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS "department", role.salary
-    FROM employee, role, department
-    WHERE employee.role_id = role.id AND role.department_id = department.id
+    `SELECT employee.id, employee.first_name, employee.last_name, role.title, 
+    department.name AS "department", role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager
+    FROM employee employee
+    JOIN role ON employee.role_id = role.id
+    JOIN department ON role.department_id = department.id
+    LEFT JOIN employee manager ON employee.manager_id = manager.id
     ORDER BY employee.id ASC`;
     return this.connection.query(query);
   }
@@ -87,7 +95,7 @@ class DBHandler {
     const query = 
     `SELECT employee.first_name, employee.last_name, manager.id AS manager_id, CONCAT(manager.first_name, " ", manager.last_name) AS manager
     FROM employee employee
-    INNER JOIN employee manager 
+    LEFT JOIN employee manager 
     ON employee.manager_id = manager.id `;
     return this.connection.query(query);
   }

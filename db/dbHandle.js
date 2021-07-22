@@ -58,6 +58,15 @@ class DBHandler {
     VALUES (?)`;
     return this.connection.query(query, department);
   }
+
+  view_all_employees() {
+    const query = 
+    `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS "department", role.salary
+    FROM employee, role, department
+    WHERE employee.role_id = role.id AND role.department_id = department.id
+    ORDER BY employee.id ASC`;
+    return this.connection.query(query);
+  }
 }
 
 module.exports = DBHandler;

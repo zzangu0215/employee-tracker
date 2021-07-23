@@ -21,6 +21,8 @@
 - [**Author**](#-author)
 
 ## 📑 Description
+![Image Caption](images/main_menu.PNG)
+
 As a business owner, don't you want to manage your employees, their roles, and their deparmtnets?  
 It's time to use **Employee Tracker** to fulfill your needs!  
 

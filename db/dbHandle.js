@@ -28,7 +28,7 @@ class DBHandler {
     return this.connection.query(query);
   }
 
-  get_managers_list() {
+  get_employees_list() {
     const query = `SELECT * FROM employee`;
     return this.connection.query(query);
   }
@@ -116,7 +116,7 @@ class DBHandler {
 
   view_all_roles() {
     const query = 
-    `SELECT role.id, role.title AS position, department.name AS department, role.salary AS salary, 
+    `SELECT role.id, role.title AS position, department.name AS department, role.salary AS "salary($)", 
     COUNT (employee.role_id) AS "Total # of Employees"
     FROM role
     LEFT JOIN department ON role.department_id = department.id
@@ -136,6 +136,15 @@ class DBHandler {
     return this.connection.query(query);
   }
 
+  view_total_budgets() {
+    const query = 
+    `SELECT department.id AS id, department.name AS department, SUM(role.salary) AS "Total Budgets($)"
+    FROM role
+    INNER JOIN department ON role.department_id = department.id
+    GROUP BY role.department_id`;
+    return this.connection.query(query);
+  }
+
   update_employee_roles(new_role_id, employee_id) {
     const query = 
     `UPDATE employee
@@ -150,6 +159,14 @@ class DBHandler {
     SET employee.manager_id = ? 
     WHERE employee.id = ?`;
     return this.connection.query(query, [manager_id, employee_id]);
+  }
+
+  delete_employee(employee_id) {
+    const query = 
+    `DELETE 
+    FROM employee
+    WHERE employee.id = ?`;
+    return this.connection.query(query, employee_id);
   }
 }
 

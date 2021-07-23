@@ -168,6 +168,22 @@ class DBHandler {
     WHERE employee.id = ?`;
     return this.connection.query(query, employee_id);
   }
+
+  delete_role(role_id) {
+    const query = 
+    `DELETE 
+    FROM role
+    WHERE role.id = ?`;
+    return this.connection.query(query, role_id);
+  }
+
+  delete_department(department_id) {
+    const query = 
+    `DELETE 
+    FROM department
+    WHERE department.id = ?`;
+    return this.connection.query(query, department_id);
+  }
 }
 
 module.exports = DBHandler;
